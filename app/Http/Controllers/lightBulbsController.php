@@ -25,7 +25,12 @@ class lightBulbsController extends Controller
 
         $matrices = $this->getMatriz($request->file('file_light')->store('avatars'));
 
-        return $matrices[0];
+        $illuminatedMatriz = $this->generateLights($matrices);
+
+        //print_r($matrices);
+        //var_dump($illuminatedMatriz);
+        return response()->json(['matrices' => $matrices, 'illuminatedMatriz' => $illuminatedMatriz]);
+
     }
 
 
@@ -33,17 +38,56 @@ class lightBulbsController extends Controller
     protected function getMatriz($file)
     {
         $files      = $file;
-        $content    = Storage::disk('local')->get($files);
-        $contents   = explode("\r\n", $content);
-        $contents   = explode('', $content[0]);
+        $file    = Storage::disk('local')->get($files);
+        $contents   = explode("\r\n", $file);
 
-        print_r($contents);
+
+        $matriz = [];
+        foreach ($contents as $content) {
+            $matriz[] = explode(" ",$content);
+        }
+
+        return $matriz;
     }
 
     //Generate matriz
     protected function generateLights($matrices)
     {
-        foreach ($matrices as $matriz) {
+
+        $light = 0;
+        for($i = 0; $i < count($matrices); $i++){
+            for($j = 0; $j < count($matrices[0]); $j++){
+
+                if($matrices[$i][$j] == 0){
+                    $light++;
+                    $matrices[$i][$j] = "focus-".$light;
+
+
+                    for($k = $i+1; $k < count($matrices[0]); $k++){
+
+
+                        if($matrices[$i][$k] == 0){
+                            $matrices[$i][$k] = "light-".$light;
+                        }
+                        if($matrices[$i][$k] == 1){
+                            break;
+                        }
+                    }
+
+                    for($k = $j+1; $k < count($matrices); $k++){
+                        if($matrices[$k][$j] == 0){
+                            $matrices[$k][$j] = "light-".$light;
+                        }
+                        if($matrices[$k][$j] == 1){
+                            break;
+                        }
+                    }
+
+
+                }
+
+            }
         }
+        return $matrices;
     }
 }
