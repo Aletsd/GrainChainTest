@@ -21,40 +21,42 @@
     </head>
 
     <body>
-        <h1>Prueba de Lógica GrainChain</h1>
-        <div class="mb-3">
-            <label for="formFile" class="form-label">
-                Aca puedes subir un archivo con una matriz en formato txt para
-                probar el Api Rest: 'http://127.0.0.1:8000/api/file-light-bulbs'
-                la cual puede ser probada desde postman, enviando un archivo con
-                el name file_light
-            </label>
-            <p>
-                Las paredes estan representadas por la palabra pared, cada foco
-                tiene la palabra foco mas un numero de foco y la luz de cada
-                foco esta representado por el numero del foco de donde proviene
-                la luz.
-            </p>
-            <form class="row g-3">
-                <div class="col-auto">
-                    <label for="staticEmail2" class="visually-hidden"
-                        >Email</label
-                    >
-                    <input class="form-control" type="file" id="formFile" />
-                </div>
-                <div class="col-auto">
-                    <button
-                        type="button"
-                        class="btn btn-primary mb-3"
-                        id="btn_send"
-                        disabled
-                    >
-                        Enviar Archivo
-                    </button>
-                </div>
-            </form>
+        <div class="container">
+            <h1>Prueba de Lógica GrainChain</h1>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">
+                    Aca puedes subir un archivo con una matriz en formato txt
+                    para probar el Api Rest:
+                    'https://apptechmx.com.mx/grainchain/public/api/file-light-bulbs'
+                    la cual puede ser probada desde postman, enviando un archivo
+                    con el name file_light
+                </label>
+                <p>
+                    Las paredes estan representadas por la palabra pared, cada
+                    foco tiene la palabra foco mas un numero de foco y la luz de
+                    cada foco esta representado por el numero del foco de donde
+                    proviene la luz.
+                </p>
+                <form class="row g-3">
+                    <div class="col-auto">
+                        <label for="staticEmail2" class="visually-hidden"
+                            >Email</label
+                        >
+                        <input class="form-control" type="file" id="formFile" />
+                    </div>
+                    <div class="col-auto">
+                        <button
+                            type="button"
+                            class="btn btn-primary mb-3"
+                            id="btn_send"
+                            disabled
+                        >
+                            Enviar Archivo
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-
         <div class="container" id="content"></div>
     </body>
 
