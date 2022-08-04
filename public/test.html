@@ -29,6 +29,12 @@
                 la cual puede ser probada desde postman, enviando un archivo con
                 el name file_light
             </label>
+            <p>
+                Las paredes estan representadas por la palabra pared, cada foco
+                tiene la palabra foco mas un numero de foco y la luz de cada
+                foco esta representado por el numero del foco de donde proviene
+                la luz.
+            </p>
             <form class="row g-3">
                 <div class="col-auto">
                     <label for="staticEmail2" class="visually-hidden"
@@ -49,7 +55,7 @@
             </form>
         </div>
 
-        <div class="container-fluid" id="content"></div>
+        <div class="container" id="content"></div>
     </body>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -61,30 +67,38 @@
         });
 
         $("#btn_send").click(function () {
+            $("#content").empty();
+            $("#btn_send").prop("disabled", true);
             const formData = new FormData();
             const formFile = document.querySelector("#formFile");
             formData.append("file_light", formFile.files[0]);
             axios
-                .post("/api/file-light-bulbs", formData)
+                .post("api/file-light-bulbs", formData)
                 .then(function (response) {
+                    $("#formFile").val("");
                     console.log(response.data.illuminatedMatriz);
                     const matriz = response.data.illuminatedMatriz;
+                    $("#content").append(`<table class="table table-striped">`);
                     matriz.forEach(function (value, index, array) {
+                        $("#content").append(`<tr>`);
                         value.forEach(function (val, i, array2) {
                             if (val == 1) {
                                 $("#content").append(
-                                    `<button type='button' class='btn btn-outline-dark'> Pared...</button>`
+                                    `<td class="table-dark"><button type="button" class="btn btn-secondary" style="width:100%;">Pared...</button> </td>`
                                 );
                             } else {
                                 $("#content").append(
-                                    "<button type='button' class='btn btn-outline-warning'> " +
+                                    `<td>
+                                        <button type="button" class="btn btn-warning" style="width:100%;">` +
                                         val +
-                                        "</button>"
+                                        "</button></td>"
                                 );
                             }
                         });
-                        $("#content").append("</br>");
+                        $("#content").append(`</tr>`);
+                        //$("#content").append("</br>");
                     });
+                    $("#content").append(`</table>`);
                 })
                 .catch(function (error) {
                     console.log(error);
